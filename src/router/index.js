@@ -51,117 +51,123 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'dashboard', affix: true }
     }]
-  },
+  }
+]
 
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
-      }
-    ]
-  },
-
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
-
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+/**
+ * asyncRoutes 需要权限才能访问
+ * the routes that need to be dynamically loaded based on user roles
+ */
+export const asyncRoutes = [
+//   {
+//     path: '/system',
+//     component: Layout,
+//     alwaysShow: true,
+//     name: 'system',
+//     meta: { title: '系统管理', icon: 'el-icon-s-help' },
+//     children: [
+//       {
+//         path: '/sysUserList',
+//         name: 'sysUserList',
+//         component: () => import('@/views/system/UserList'),
+//         meta: { title: '用户管理', icon: 'table' }
+//       },
+//       {
+//         path: '/sysRoleList',
+//         name: 'sysRoleList',
+//         component: () => import('@/views/system/RoleList'),
+//         meta: { title: '角色管理', icon: 'tree' }
+//       },
+//       {
+//         path: '/sysMenuList',
+//         name: 'sysMenuList',
+//         component: () => import('@/views/system/MenuList'),
+//         meta: { title: '菜单管理', icon: 'tree' }
+//       }
+//     ]
+//   },
+//   {
+//     path: '/reader',
+//     component: Layout,
+//     name: 'reader',
+//     alwaysShow: true,
+//     meta: { title: '读者管理', icon: 'el-icon-s-help' },
+//     children: [
+//       {
+//         path: '/readerList',
+//         name: 'readerList',
+//         component: () => import('@/views/reader/readerList'),
+//         meta: { title: '读者列表', icon: 'table' }
+//       }
+//     ]
+//   },
+//   {
+//     path: '/book',
+//     component: Layout,
+//     alwaysShow: true,
+//     name: 'book',
+//     meta: { title: '图书管理', icon: 'el-icon-s-help' },
+//     children: [
+//       {
+//         path: '/bookCategory',
+//         name: 'bookCategory',
+//         component: () => import('@/views/book/bookCategory'),
+//         meta: { title: '图书分类', icon: 'table' }
+//       },
+//       {
+//         path: '/bookList',
+//         name: 'bookList',
+//         component: () => import('@/views/book/bookList'),
+//         meta: { title: '图书列表', icon: 'table' }
+//       }
+//     ]
+//   },
+//   {
+//     path: '/borrow',
+//     component: Layout,
+//     alwaysShow: true,
+//     name: 'borrow',
+//     meta: { title: '借阅管理', icon: 'el-icon-s-help' },
+//     children: [
+//       {
+//         path: '/bookBorrow',
+//         name: 'bookBorrow',
+//         component: () => import('@/views/borrow/bookBorrow'),
+//         meta: { title: '借书管理', icon: 'table' }
+//       },
+//       {
+//         path: '/bookReturn',
+//         name: 'bookReturn',
+//         component: () => import('@/views/borrow/bookReturn'),
+//         meta: { title: '还书管理', icon: 'table' }
+//       },
+//       {
+//         path: '/borrowLook',
+//         name: 'borrowLook',
+//         component: () => import('@/views/borrow/borrowLook'),
+//         meta: { title: '借阅查看', icon: 'el-icon-s-cooperation' }
+//       }
+//     ]
+//   },
+//   {
+//     path: '/notice',
+//     component: Layout,
+//     alwaysShow: true,
+//     name: 'notice',
+//     meta: { title: '公告管理', icon: 'el-icon-s-help' },
+//     children: [
+//       {
+//         path: '/noticeList',
+//         name: 'noticeList',
+//         component: () => import('@/views/notice/noticeList'),
+//         meta: { title: '公告列表', icon: 'table' }
+//       }
+//     ]
+//   },
+//   // 404 page must be placed at the end !!!
+//   { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({

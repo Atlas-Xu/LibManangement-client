@@ -1,5 +1,5 @@
-import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { loginApi, logout, getInfo } from '@/api/user'
+import { getToken, setToken, removeToken, setUserId, getUserId, clearSession } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
@@ -28,14 +28,20 @@ const mutations = {
 }
 
 const actions = {
-  // user login
+  // user login vuex里面的用户登录
   login({ commit }, userInfo) {
-    const { username, password } = userInfo
+    const { username, password, userType } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
+      // api里面的user.js模块里面的login方法
+      loginApi({ username: username.trim(), password: password, userType: userType }).then(response => {
         const { data } = response
+        console.log('登录成功')
+        console.log(data)
+        // 登录返回后，把token存入vuex
         commit('SET_TOKEN', data.token)
+        // 将token存入cookies
         setToken(data.token)
+        setUserId(data.userId)
         resolve()
       }).catch(error => {
         reject(error)
@@ -44,9 +50,12 @@ const actions = {
   },
 
   // get user info
+  // 获取用户的权限信息和自己的信息
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
+      getInfo({ userId: getUserId() }).then(response => {
+        console.log('获取用户权限字段')
+        console.log(response)
         const { data } = response
 
         if (!data) {
@@ -65,12 +74,14 @@ const actions = {
   },
 
   // user logout
-  logout({ commit, state }) {
+  logout({ commit, state, dispatch }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         removeToken() // must remove  token  first
         resetRouter()
         commit('RESET_STATE')
+        // 清空tagsview里面的数据
+        dispatch('tagsView/delAllViews', {}, { root: true })
         resolve()
       }).catch(error => {
         reject(error)
@@ -79,10 +90,13 @@ const actions = {
   },
 
   // remove token
-  resetToken({ commit }) {
+  resetToken({ commit, dispatch }) {
     return new Promise(resolve => {
       removeToken() // must remove  token  first
+      clearSession()
       commit('RESET_STATE')
+      // 清空tagsview里面的数据
+      dispatch('tagsView/delAllViews', {}, { root: true })
       resolve()
     })
   }

@@ -13,33 +13,88 @@
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/">
             <el-dropdown-item>
-              Home
+              首页
             </el-dropdown-item>
           </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
+          <el-dropdown-item divided>
+            <span style="display:block;">重置密码</span>
+          </el-dropdown-item>
+          <el-dropdown-item divided @click.native="updatePwd">
+            <span style="display:block;">修改密码</span>
+          </el-dropdown-item>
           <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">Log Out</span>
+            <span style="display:block;">退出登录</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+    <!--修改密码弹框-->
+    <sys-dialog
+      :title="dialog.title"
+      :height="dialog.height"
+      :width="dialog.width"
+      :visible="dialog.visible"
+      @onClose="onClose"
+      @onConfirm="onConfirm"
+    >
+      <div slot="content">
+        <el-form
+          :model="addModel"
+          ref="addModel"
+          :rules="rules"
+          label-width="80px"
+          :inline="true"
+          size="small"
+        >
+          <el-form-item prop="oldPassword" label="原密码">
+            <el-input v-model="addModel.oldPassword"></el-input>
+          </el-form-item>
+          <el-form-item prop="password" label="新密码">
+            <el-input v-model="addModel.password"></el-input>
+          </el-form-item>
+        </el-form>
+      </div>
+    </sys-dialog>
+
   </div>
 </template>
 
 <script>
+import SysDialog from '@/components/Dialog/SysDialog'
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import { updatePasswordApi } from '@/api/user'
+import { getUserId } from '@/utils/auth'
 
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
+    SysDialog
+  },
+  data() {
+    return {
+      rules: {
+        oldPassword: [
+          { trigger: 'blur', required: true, message: '原密码不能为空!' },
+        ],
+        password: [
+          { trigger: 'blur', required: true, message: '新密码不能为空!' },
+        ]
+      },
+      addModel: {
+        userId: '',
+        oldPassword: '',
+        password: ''
+      },
+      dialog: {
+        title: '密码修改',
+        height: 150,
+        width: 650,
+        visible: false
+      }
+    }
   },
   computed: {
     ...mapGetters([
@@ -48,6 +103,24 @@ export default {
     ])
   },
   methods: {
+    onClose() {
+      this.dialog.visible = false
+    },
+    onConfirm() {
+      this.$refs.addModel.validate(async(valid) => {
+        if (valid) {
+          this.addModel.userId = getUserId()
+          let res = await updatePasswordApi(this.addModel)
+          if (res && res.code == 200) {
+            this.$message.success(res.msg)
+            this.dialog.visible = false;
+          }
+        }
+      })
+    },
+    updatePwd() {
+      this.dialog.visible = true
+    },
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },

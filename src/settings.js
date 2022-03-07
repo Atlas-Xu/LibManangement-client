@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Vue Admin Template',
+  title: 'xchub图书馆',
 
   /**
    * @type {boolean} true | false
