@@ -1,6 +1,5 @@
 import router from './router'
 import store from './store'
-import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
 import { getToken } from '@/utils/auth' // get token from cookie
@@ -31,13 +30,13 @@ router.beforeEach(async(to, from, next) => {
       NProgress.done()
     } else {
       // 从vuex中获取用户的所有权限
-      const hasGetUserInfo = store.getters.name
-      if (hasGetUserInfo) {
+      const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      if (hasRoles) {
         // 有权限直接放行
         next()
       } else {
         try {
-          // get user info 从后端服务器获取权限信息
+          // get user info 从后端服务器获取权限信息,vuex里面的user模块的getInfo
           const { roles } = await store.dispatch('user/getInfo')
 
           // 动态生成菜单和路由

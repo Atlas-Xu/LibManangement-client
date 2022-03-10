@@ -17,7 +17,7 @@ export const deleteRoleApi = async(parm) => {
 }
 // 角色权限树
 export const getAssingShowApi = async(parm) => {
-  return await http.get('/api/role/getAssingShow', parm)
+  return await http.get('/api/role/getAssignShow', parm)
 }
 // 保存角色分配的权限
 export const saveAssignApi = async(parm) => {

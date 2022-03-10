@@ -260,7 +260,7 @@ export default {
       this.assignDialog.title = '为【' + row.roleName + '】分配权限'
       this.assignDialog.visible = true
       // 获取权限数据
-      const parm = {
+      let parm = {
         userId: '3',
         roleId: this.roleId
       }
@@ -272,7 +272,7 @@ export default {
       }
       // 如果角色原来有权限
       if (this.assignTreeChecked.length > 0) {
-        const newArr = []
+        let newArr = []
         this.assignTreeChecked.forEach((item) => {
           this.checked(item, this.assignTreeData, newArr)
         })
