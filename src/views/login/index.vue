@@ -38,7 +38,7 @@
             cursor: pointer;
           "
           @click="registerBtn"
-        >无账号，读者注册</span>
+        >读者注册</span>
       </el-form-item>
       <el-form-item>
         <el-row :gutter="20">

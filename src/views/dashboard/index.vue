@@ -15,19 +15,19 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="show-header" style="background: rgb(255, 153, 0)">
+        <div class="show-header" style="background: rgb(255, 105, 133)">
           <div class="show-num">{{ applyReader }}</div>
           <div class="bottom-text">读者待审核</div>
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="show-header" style="background: rgb(45, 183, 245)">
+        <div class="show-header" style="background: rgb(106, 90, 205)">
           <div class="show-num">{{ borrowApplyCount }}</div>
           <div class="bottom-text">预借待审核</div>
         </div>
       </el-col>
       <el-col :span="6">
-        <div class="show-header" style="background: rgb(237, 64, 20)">
+        <div class="show-header" style="background: rgb(135, 206, 235)">
           <div class="show-num">{{ borrowReturnCount }}</div>
           <div class="bottom-text">到期待还书</div>
         </div>
@@ -129,6 +129,7 @@ export default {
           text: '图书分类统计'
         },
         xAxis: {
+          type: 'category',
           data: []
         },
         yAxis: {},

@@ -52,8 +52,6 @@ const actions = {
       })
     })
   },
-
-  // get user info
   // 获取用户的权限信息和自己的信息
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
