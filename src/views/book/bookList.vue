@@ -1,9 +1,9 @@
 <template>
   <el-main>
     <!--搜索栏 -->
-    <el-form :model="listParm" :inline="true" size="small">
+    <el-form :model="listParam" :inline="true" size="small">
       <el-form-item>
-        <el-select v-model="listParm.categoryId" placeholder="请选择">
+        <el-select v-model="listParam.categoryId" placeholder="请选择">
           <el-option
             v-for="item in options"
             :key="item.categoryId"
@@ -14,19 +14,19 @@
       </el-form-item>
       <el-form-item>
         <el-input
-          v-model="listParm.bookName"
+          v-model="listParam.bookName"
           placeholder="请输入图书名称"
         />
       </el-form-item>
       <el-form-item>
         <el-input
-          v-model="listParm.bookPlaceNum"
+          v-model="listParam.bookPlaceNum"
           placeholder="请输入书架号"
         />
       </el-form-item>
       <el-form-item>
         <el-input
-          v-model="listParm.bookAuther"
+          v-model="listParam.bookAuthor"
           placeholder="请输入作者"
         />
       </el-form-item>
@@ -50,7 +50,7 @@
       <el-table-column label="图书名称" prop="bookName" />
       <el-table-column label="图书分类" prop="categoryName" />
       <el-table-column label="书架号" prop="bookPlaceNum" />
-      <el-table-column label="作者" prop="bookAuther" />
+      <el-table-column label="作者" prop="bookAuthor" />
       <el-table-column label="出版社" prop="bookProduct" />
       <el-table-column label="价格" prop="bookPrice" />
       <el-table-column label="库存" prop="bookStore" />
@@ -75,11 +75,11 @@
     </el-table>
     <!-- 分页 -->
     <el-pagination
-      :current-page.sync="listParm.currentPage"
+      :current-page.sync="listParam.currentPage"
       :page-sizes="[10, 20, 40, 80, 100]"
-      :page-size="listParm.pageSize"
+      :page-size="listParam.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="listParm.total"
+      :total="listParam.total"
       background
       @size-change="sizeChange"
       @current-change="currentChange"
@@ -135,8 +135,8 @@
           </el-row>
           <el-row>
             <el-col :span="12" :offset="0">
-              <el-form-item prop="bookAuther" label="图书作者">
-                <el-input v-model="addModel.bookAuther" />
+              <el-form-item prop="bookAuthor" label="图书作者">
+                <el-input v-model="addModel.bookAuthor" />
               </el-form-item>
             </el-col>
             <el-col :span="12" :offset="0">
@@ -208,7 +208,7 @@ export default {
             message: '请填写图书出版社'
           }
         ],
-        bookAuther: [
+        bookAuthor: [
           {
             required: true,
             trigger: 'blur',
@@ -246,7 +246,7 @@ export default {
         bookCode: '',
         bookPlaceNum: '',
         bookProduct: '',
-        bookAuther: '',
+        bookAuthor: '',
         bookPrice: '',
         bookStore: '',
         type: ''
@@ -265,13 +265,13 @@ export default {
       // 表格数据
       tableData: [],
       // 列表查询参数
-      listParm: {
+      listParam: {
         currentPage: 1,
         pageSize: 10,
         categoryId: '',
         bookName: '',
         bookPlaceNum: '',
-        bookAuther: '',
+        bookAuthor: '',
         total: 0
       }
     }
@@ -288,11 +288,11 @@ export default {
   methods: {
     // 列表查询
     async getList() {
-      const res = await getListApi(this.listParm)
+      const res = await getListApi(this.listParam)
       if (res && res.code == 200) {
         console.log(res)
         this.tableData = res.data.records
-        this.listParm.total = res.data.total
+        this.listParam.total = res.data.total
       }
     },
     // 弹框确定事件
@@ -330,12 +330,12 @@ export default {
     },
     // 页数改变时触发
     currentChange(val) {
-      this.listParm.currentPage = val
+      this.listParam.currentPage = val
       this.getList()
     },
     // 页容量改变时触发
     sizeChange(val) {
-      this.listParm.pageSize = val
+      this.listParam.pageSize = val
       this.getList()
     },
     // 删除按钮
@@ -371,10 +371,10 @@ export default {
     },
     // 重置按钮
     resetBtn() {
-      this.listParm.categoryId = ''
-      this.listParm.bookName = ''
-      this.listParm.bookPlaceNum = ''
-      this.listParm.bookAuther = ''
+      this.listParam.categoryId = ''
+      this.listParam.bookName = ''
+      this.listParam.bookPlaceNum = ''
+      this.listParam.bookAuthor = ''
       this.getList()
     },
     // 搜索按钮

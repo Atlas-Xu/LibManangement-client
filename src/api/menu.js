@@ -11,14 +11,14 @@ export const getParentMenuListApi = async() => {
 }
 
 // 新增
-export const addMenuApi = async(parm) => {
-  return await http.post('/api/menu', parm)
+export const addMenuApi = async(param) => {
+  return await http.post('/api/menu', param)
 }
 // 编辑
-export const editMenuApi = async(parm) => {
-  return await http.put('/api/menu', parm)
+export const editMenuApi = async(param) => {
+  return await http.put('/api/menu', param)
 }
 // 删除
-export const deleteMenuApi = async(parm) => {
-  return await http.delete('/api/menu', parm)
+export const deleteMenuApi = async(param) => {
+  return await http.delete('/api/menu', param)
 }

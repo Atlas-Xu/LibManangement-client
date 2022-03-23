@@ -68,7 +68,7 @@
         <el-form
           ref="addRef"
           :model="addModel"
-          :rules="registeRules"
+          :rules="registerRules"
           label-width="80px"
           size="small"
           style="margin-right: 30px"
@@ -140,7 +140,7 @@ export default {
   },
   data() {
     return {
-      registeRules: {
+      registerRules: {
         learnNum: [{ required: true, message: '请填写姓名', trigger: 'blur' }],
         username: [{ required: true, message: '请填写学号', trigger: 'blur' }],
         idCard: [

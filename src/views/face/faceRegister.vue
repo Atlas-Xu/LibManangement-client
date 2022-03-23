@@ -39,24 +39,25 @@
 <script>
 import { addFaceApi } from '@/api/face'
 import { getUserId } from '@/utils/auth'
+import messageBox from 'element-ui/packages/message-box'
 export default {
   data() {
     return {
-      imgUrl:'',
+      imgUrl: '',
       fileList: [],
-      dialogVisible:false,
-      base64Str:''
+      dialogVisible: false,
+      base64Str: ''
     }
   },
   methods: {
-    handleChange(file,fileList){
+    handleChange(file, fileList) {
       let fileReader = new FileReader()
       fileReader.readAsDataURL(file.raw)
       fileReader.onload = () => {
-        console.log('file 转 base64结果：' + fileReader.result)
+        // console.log('file 转 base64结果：' + fileReader.result)
         this.base64Str = fileReader.result
       }
-      fileReader.onerror = function (error) {
+      fileReader.onerror = function(error) {
         console.log('Error: ', error)
       }
     },
@@ -64,23 +65,31 @@ export default {
       console.log(file);
     },
     handlePreview(file) {
-      this.imgUrl =  URL.createObjectURL(file.raw);
+      this.imgUrl = URL.createObjectURL(file.raw);
       console.log(this.imgUrl)
       this.dialogVisible = true
 
     },
-    async addFace(){
-      console.log(this.base64Str)
-      const parm = {
-        Base64Str: this.base64Str,
-        readerId: getUserId()
-      }
-      const res = await addFaceApi(parm)
-      if (res && res.code == 200) {
-        this.$message.success(res.msg)
-        setTimeout(function() {
-          window.location.reload()
-        }, 3000)
+    async addFace() {
+      if (this.base64Str == '') {
+        this.$message({
+          type: 'error',
+          message: '请选择图片'
+        });
+        return
+      } else {
+        const param = {
+          base64Str: this.base64Str,
+          readerId: getUserId()
+        }
+        console.log("param的" + param.base64Str)
+        const res = await addFaceApi(param)
+        if (res && res.code == 200) {
+          this.$message.success(res.msg)
+          setTimeout(function() {
+            window.location.reload()
+          }, 5000)
+        }
       }
     }
   }

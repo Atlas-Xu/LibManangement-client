@@ -1,19 +1,19 @@
 import http from '@/utils/http'
 // 列表
-export const getListApi = async(parm) => {
-  return await http.get('/api/category/list', parm)
+export const getListApi = async(param) => {
+  return await http.get('/api/category/list', param)
 }
 // 新增
-export const addApi = async(parm) => {
-  return await http.post('/api/category', parm)
+export const addApi = async(param) => {
+  return await http.post('/api/category', param)
 }
 // 编辑
-export const editApi = async(parm) => {
-  return await http.put('/api/category', parm)
+export const editApi = async(param) => {
+  return await http.put('/api/category', param)
 }
 // 删除
-export const deleteApi = async(parm) => {
-  return await http.delete('/api/category', parm)
+export const deleteApi = async(param) => {
+  return await http.delete('/api/category', param)
 }
 // 首页用
 export const categoryCountApi = async() => {

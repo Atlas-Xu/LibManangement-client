@@ -10,8 +10,8 @@ import http from '@/utils/http'
 //   })
 // }
 
-export const loginApi = async(parm) => {
-  return await http.post('/api/system/login', parm)
+export const loginApi = async(param) => {
+  return await http.post('/api/system/login', param)
 }
 
 // export function getInfo(token) {
@@ -22,8 +22,8 @@ export const loginApi = async(parm) => {
 //   })
 // }
 
-export const getInfo = async(parm) => {
-  return await http.get('/api/system/getInfo', parm)
+export const getInfo = async(param) => {
+  return await http.get('/api/system/getInfo', param)
 }
 
 export function logout() {
@@ -34,23 +34,23 @@ export function logout() {
 }
 
 // 获取用户列表
-export const getListApi = async(parm) => {
-  return await http.get('/api/user/list', parm)
+export const getListApi = async(param) => {
+  return await http.get('/api/user/list', param)
 }
 
 // 新增
-export const addUserApi = async(parm) => {
-  return await http.post('/api/user', parm)
+export const addUserApi = async(param) => {
+  return await http.post('/api/user', param)
 }
 
 // 编辑
-export const editUserApi = async(parm) =>{
-  return await http.put('/api/user', parm)
+export const editUserApi = async(param) =>{
+  return await http.put('/api/user', param)
 }
 
 // 删除
-export const deleteUserApi = async(parm) => {
-  return await http.delete('/api/user', parm)
+export const deleteUserApi = async(param) => {
+  return await http.delete('/api/user', param)
 }
 
 // 获取角色列表
@@ -58,18 +58,18 @@ export const getRoleListApi = async() => {
   return await http.get('/api/user/getRoleList',null)
 }
 // 根据用户id查询角色
-export const getRoleIdApi = async(parm) => {
-  return await http.get('/api/user/getRoleId', parm)
+export const getRoleIdApi = async(param) => {
+  return await http.get('/api/user/getRoleId', param)
 }
 // 获取菜单列表
 export const getMenuListApi = async() => {
   return await http.get('/api/system/getMenuList',null)
 }
 // 修改密码
-export const updatePasswordApi = async(parm) => {
-  return await http.post('/api/user/updatePassword',parm)
+export const updatePasswordApi = async(param) => {
+  return await http.post('/api/user/updatePassword',param)
 }
 // 重置密码
-export const resetPasswordApi = async(parm) => {
-  return await http.post('/api/user/resetPassword', parm)
+export const resetPasswordApi = async(param) => {
+  return await http.post('/api/user/resetPassword', param)
 }

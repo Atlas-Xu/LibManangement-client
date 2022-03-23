@@ -1,10 +1,10 @@
 <template>
   <el-main>
     <!--搜索栏 -->
-    <el-form :model="listParm" label-width="80px" :inline="true" size="small">
+    <el-form :model="listParam" label-width="80px" :inline="true" size="small">
       <el-form-item>
         <el-input
-          v-model="listParm.categoryName"
+          v-model="listParam.categoryName"
           placeholder="请输入类型名称"
         />
       </el-form-item>
@@ -48,11 +48,11 @@
     </el-table>
     <!-- 分页 -->
     <el-pagination
-      :current-page.sync="listParm.currentPage"
+      :current-page.sync="listParam.currentPage"
       :page-sizes="[10, 20, 40, 80, 100]"
-      :page-size="listParm.pageSize"
+      :page-size="listParam.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="listParm.total"
+      :total="listParam.total"
       background
       @size-change="sizeChange"
       @current-change="currentChange"
@@ -132,7 +132,7 @@ export default {
       // 表格数据
       tableData: [],
       // 列表参数
-      listParm: {
+      listParam: {
         currentPage: 1,
         pageSize: 10,
         categoryName: '',
@@ -176,28 +176,28 @@ export default {
     },
     // 获取列表
     async getList() {
-      const res = await getListApi(this.listParm)
+      const res = await getListApi(this.listParam)
       if (res && res.code == 200) {
         console.log(res)
         this.tableData = res.data.records
-        this.listParm.total = res.data.total
+        this.listParam.total = res.data.total
       }
     },
     // 页数改变时触发事件
     currentChange(val) {
-      this.listParm.currentPage = val
+      this.listParam.currentPage = val
       this.getList()
     },
     // 页容量改动时触发事件
     sizeChange(val) {
-      this.listParm.pageSize = val
+      this.listParam.pageSize = val
       this.getList()
     },
     // 删除按钮
     async deleteBtn(row) {
       // 信息确认，await等待不能省
-      const confrim = await this.$myconfirm('确定删除该数据吗?')
-      if (confrim) {
+      const confirm = await this.$myconfirm('确定删除该数据吗?')
+      if (confirm) {
         const res = await deleteApi({ categoryId: row.categoryId })
         if (res && res.code == 200) {
           // 信息提示
@@ -230,7 +230,7 @@ export default {
     // 重置按钮
     resetBtn() {
       // 清空表单
-      this.listParm.categoryName = ''
+      this.listParam.categoryName = ''
       this.getList()
     },
     // 搜索按钮

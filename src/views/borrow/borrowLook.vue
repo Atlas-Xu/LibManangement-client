@@ -1,18 +1,18 @@
 <template>
   <el-main>
     <!-- 搜索栏 -->
-    <el-form :model="lookParm" label-width="80px" :inline="true" size="mini">
+    <el-form :model="lookParam" label-width="80px" :inline="true" size="mini">
       <el-form-item label="读者学号">
-        <el-input v-model="lookParm.username" />
+        <el-input v-model="lookParam.username" />
       </el-form-item>
       <el-form-item label="读者姓名">
-        <el-input v-model="lookParm.learnNum" />
+        <el-input v-model="lookParam.learnNum" />
       </el-form-item>
       <el-form-item label="图书名称">
-        <el-input v-model="lookParm.bookName" />
+        <el-input v-model="lookParam.bookName" />
       </el-form-item>
       <el-form-item label="借书状态">
-        <el-select v-model="lookParm.borrowStatus" placeholder="请选择">
+        <el-select v-model="lookParam.borrowStatus" placeholder="请选择">
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -22,7 +22,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="异常状态">
-        <el-select v-model="lookParm.returnStatus" placeholder="请选择">
+        <el-select v-model="lookParam.returnStatus" placeholder="请选择">
           <el-option
             v-for="item in exceoptions"
             :key="item.value"
@@ -32,7 +32,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="到期状态">
-        <el-select v-model="lookParm.timeStatus" placeholder="请选择">
+        <el-select v-model="lookParam.timeStatus" placeholder="请选择">
           <el-option
             v-for="item in timetions"
             :key="item.value"
@@ -42,7 +42,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="审核状态">
-        <el-select v-model="lookParm.applyStatus" placeholder="请选择">
+        <el-select v-model="lookParam.applyStatus" placeholder="请选择">
           <el-option
             v-for="item in applytions"
             :key="item.value"
@@ -152,11 +152,11 @@
     </el-table>
     <!-- 分页 -->
     <el-pagination
-      :current-page.sync="lookParm.currentPage"
+      :current-page.sync="lookParam.currentPage"
       :page-sizes="[7, 20, 40, 80, 100]"
-      :page-size="lookParm.pageSize"
+      :page-size="lookParam.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="lookParm.total"
+      :total="lookParam.total"
       background
       @size-change="sizeChange"
       @current-change="currentChange"
@@ -267,8 +267,8 @@ export default {
           label: '拒绝'
         }
       ],
-      lookParm: {
-        // 与后端接口对应的lookparm相同
+      lookParam: {
+        // 与后端接口对应的lookParam相同
         userId: getUserId(),
         total: 0,
         currentPage: 1,
@@ -329,28 +329,28 @@ export default {
     },
     resetBtn() {
       // 清空表单
-      this.lookParm.username = ''
-      this.lookParm.learnNum = ''
-      this.lookParm.bookName = ''
-      this.lookParm.applyStatus = ''
-      this.lookParm.borrowStatus = ''
-      this.lookParm.returnStatus = ''
-      this.lookParm.timeStatus = ''
+      this.lookParam.username = ''
+      this.lookParam.learnNum = ''
+      this.lookParam.bookName = ''
+      this.lookParam.applyStatus = ''
+      this.lookParam.borrowStatus = ''
+      this.lookParam.returnStatus = ''
+      this.lookParam.timeStatus = ''
       this.getLookBorrowList()
     },
     currentChange(val) {
-      this.lookParm.currentPage = val
+      this.lookParam.currentPage = val
       this.getLookBorrowList()
     },
     sizeChange(val) {
-      this.lookParm.pageSize = val
+      this.lookParam.pageSize = val
       this.getLookBorrowList()
     },
     async getLookBorrowList() {
-      const res = await getLookBorrowListApi(this.lookParm)
+      const res = await getLookBorrowListApi(this.lookParam)
       if (res && res.code == 200) {
         this.tableData = res.data.records
-        this.lookParm.total = res.data.total
+        this.lookParam.total = res.data.total
       }
     }
   }

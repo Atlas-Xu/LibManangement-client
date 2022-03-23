@@ -1,10 +1,10 @@
 <template>
   <el-main>
     <!-- 搜索栏 -->
-    <el-form :model="listParm" label-width="80px" :inline="true" size="small">
+    <el-form :model="listParam" label-width="80px" :inline="true" size="small">
       <el-form-item>
         <el-input
-          v-model="listParm.roleName"
+          v-model="listParam.roleName"
           placeholder="请输入角色名称"
         />
       </el-form-item>
@@ -63,11 +63,11 @@
     </el-table>
     <!-- 分页 -->
     <el-pagination
-      :current-page.sync="listParm.currentPage"
+      :current-page.sync="listParam.currentPage"
       :page-sizes="[10, 20, 40, 80, 100]"
-      :page-size="listParm.pageSize"
+      :page-size="listParam.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="listParm.total"
+      :total="listParam.total"
       background
       @size-change="sizeChange"
       @current-change="currentChange"
@@ -200,7 +200,7 @@ export default {
       // 表格高度
       tableHeight: 0,
       // 列表查询参数
-      listParm: {
+      listParam: {
         pageSize: 10,
         currentPage: 1,
         roleName: '',
@@ -240,11 +240,11 @@ export default {
         .getCheckedKeys()
         .concat(this.$refs.assignTree.getHalfCheckedKeys())
       console.log(ids)
-      const parm = {
+      const param = {
         roleId: this.roleId,
         list: ids
       }
-      const res = await saveAssignApi(parm)
+      const res = await saveAssignApi(param)
       if (res && res.code == 200) {
         this.$message({ type: 'success', message: res.msg })
         this.assignDialog.visible = false
@@ -260,11 +260,11 @@ export default {
       this.assignDialog.title = '为【' + row.roleName + '】分配权限'
       this.assignDialog.visible = true
       // 获取权限数据
-      let parm = {
+      let param = {
         userId: '3',
         roleId: this.roleId
       }
-      const res = await getAssingShowApi(parm)
+      const res = await getAssingShowApi(param)
       console.log(res)
       if (res && res.code == 200) {
         this.assignTreeData = res.data.menuList
@@ -321,22 +321,22 @@ export default {
     },
     // 获取列表
     async getList() {
-      const res = await getListApi(this.listParm)
+      const res = await getListApi(this.listParam)
       if (res && res.code == 200) {
         console.log(res)
         // 设置表格数据
         this.tableData = res.data.records
-        this.listParm.total = res.data.total
+        this.listParam.total = res.data.total
       }
     },
     // 页数改变时触发
     currentChange(val) {
-      this.listParm.currentPage = val
+      this.listParam.currentPage = val
       this.getList()
     },
     // 页容量改变时触发
     sizeChange(val) {
-      this.listParm.pageSize = val
+      this.listParam.pageSize = val
       this.getList()
     },
     // 删除按钮
@@ -376,7 +376,7 @@ export default {
     },
     // 重置按钮
     resetBtn() {
-      this.listParm.roleName = ''
+      this.listParam.roleName = ''
       this.getList()
     },
     // 搜索按钮

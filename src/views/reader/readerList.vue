@@ -1,28 +1,28 @@
 <template>
   <el-main>
     <!-- 搜索栏 -->
-    <el-form :model="listParm" :inline="true" size="small">
+    <el-form :model="listParam" :inline="true" size="small">
       <el-form-item>
         <el-input
-          v-model="listParm.username"
+          v-model="listParam.username"
           placeholder="请输入学号"
         />
       </el-form-item>
       <el-form-item>
         <el-input
-          v-model="listParm.learnNum"
+          v-model="listParam.learnNum"
           placeholder="请输入姓名"
         />
       </el-form-item>
       <el-form-item>
         <el-input
-          v-model="listParm.phone"
+          v-model="listParam.phone"
           placeholder="请输入电话号码"
         />
       </el-form-item>
       <el-form-item>
         <el-input
-          v-model="listParm.idCard"
+          v-model="listParam.idCard"
           placeholder="请输入身份证号码"
         />
       </el-form-item>
@@ -104,11 +104,11 @@
     </el-table>
     <!-- 分页 -->
     <el-pagination
-      :current-page.sync="listParm.currentPage"
+      :current-page.sync="listParam.currentPage"
       :page-sizes="[10, 20, 40, 80, 100]"
-      :page-size="listParm.pageSize"
+      :page-size="listParam.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="listParm.total"
+      :total="listParam.total"
       background
       @size-change="sizeChange"
       @current-change="currentChange"
@@ -235,7 +235,7 @@ export default {
       // 表格数据
       tableData: [],
       // 列表参数
-      listParm: {
+      listParam: {
         total: 0,
         currentPage: 1,
         pageSize: 10,
@@ -268,7 +268,7 @@ export default {
       }
     },
     async applyBtn(row) {
-      const confirm = await this.$myconfirm('确定审核吗?')
+      const confirm = await this.$myconfirm('请确认是否审核通过。')
       if (confirm) {
         console.log(row)
         const res = await applyReaderApi({ readerId: row.readerId })
@@ -309,11 +309,11 @@ export default {
     sizeChange(val) {},
     // 获取列表
     async getList() {
-      const res = await getListApi(this.listParm)
+      const res = await getListApi(this.listParam)
       if (res && res.code == 200) {
         console.log(res)
         this.tableData = res.data.records
-        this.listParm.total = res.data.total
+        this.listParam.total = res.data.total
       }
     },
     // 删除按钮
@@ -351,10 +351,10 @@ export default {
     },
     // 重置按钮
     resetBtn() {
-      this.listParm.username = ''
-      this.listParm.idCard = ''
-      this.listParm.learnNum = ''
-      this.listParm.phone = ''
+      this.listParam.username = ''
+      this.listParam.idCard = ''
+      this.listParam.learnNum = ''
+      this.listParam.phone = ''
       this.getList()
     },
     // 搜索按钮

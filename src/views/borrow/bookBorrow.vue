@@ -14,13 +14,13 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <el-form
-          :model="searchParm"
+          :model="searchParam"
           label-width="80px"
           :inline="true"
           size="small"
         >
           <el-form-item label="学号">
-            <el-input v-model="searchParm.username" />
+            <el-input v-model="searchParam.username" />
           </el-form-item>
           <el-form-item>
             <el-button
@@ -110,12 +110,12 @@
       <template v-slot:leftCondition="{}">
         <el-form-item label="图书名称">
           <el-input
-            v-model="listParm.bookName"
+            v-model="listParam.bookName"
             placeholder="图书名称"
           />
         </el-form-item>
         <el-form-item label="作者">
-          <el-input v-model="listParm.bookAuther" placeholder="作者" />
+          <el-input v-model="listParam.bookAuthor" placeholder="作者" />
         </el-form-item>
       </template>
       <template v-slot:rightCondition="{ scope }">
@@ -142,11 +142,11 @@ export default {
       returnTime: '',
       bookIds: [],
       // 图书列表分页参数
-      listParm: {
+      listParam: {
         currentPage: '',
         pageSize: '',
         bookName: '',
-        bookAuther: ''
+        bookAuthor: ''
       },
       // 选择的图书
       tableData: [],
@@ -154,12 +154,12 @@ export default {
         { label: '图书名称', id: 'bookName', width: '120px' },
         { label: '图书分类', id: 'categoryName', width: '120px' },
         { label: '书架号', id: 'bookPlaceNum' },
-        { label: '作者', id: 'bookAuther' },
+        { label: '作者', id: 'bookAuthor' },
         { label: '出版社', id: 'bookProduct' },
         { label: '库存', id: 'bookStore' }
       ],
       // 读者信息搜索框
-      searchParm: {
+      searchParam: {
         username: ''
       },
       showUser: {
@@ -196,12 +196,12 @@ export default {
         this.bookIds.push(this.tableData[i].bookId)
       }
       // 提交
-      const parm = {
+      const param = {
         readerId: this.showUser.readerId,
         bookIds: this.bookIds,
         returnTime: this.returnTime
       }
-      const res = await borrowApi(parm)
+      const res = await borrowApi(param)
       if (res && res.code == 200) {
         this.$message.success(res.msg)
         setTimeout(function() {
@@ -211,7 +211,7 @@ export default {
     },
     // 重置按钮
     resetBtn() {
-      this.searchParm.username = ''
+      this.searchParam.username = ''
       this.showUser.readerId = ''
       this.showUser.learnNum = ''
       this.showUser.username = ''
@@ -223,17 +223,17 @@ export default {
     },
     // 获取读者信息
     async getByUserName() {
-      const res = await getByUserNameApi(this.searchParm)
+      const res = await getByUserNameApi(this.searchParam)
       if (res && res.code == 200 && res.data) {
         this.showUser = res.data
       }
     },
     async paginationCallBack(obj) {
       console.log(obj)
-      this.listParm.currentPage = obj.pageIndex
-      this.listParm.pageSize = obj.pageSize
+      this.listParam.currentPage = obj.pageIndex
+      this.listParam.pageSize = obj.pageSize
       // 获取图书数据
-      const res = await getListApi(this.listParm)
+      const res = await getListApi(this.listParam)
       console.log(res)
       return new Promise((resolve, reject) => {
         try {

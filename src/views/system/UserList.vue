@@ -2,7 +2,7 @@
   <el-main>
     <el-form
       ref="searchRef"
-      :model="listParm"
+      :model="listParam"
       label-width="80px"
       :inline="true"
       size="small"
@@ -10,12 +10,12 @@
     >
       <el-form-item>
         <el-input
-          v-model="listParm.nickName"
+          v-model="listParam.nickName"
           placeholder="请输入姓名"
         />
       </el-form-item>
       <el-form-item>
-        <el-input v-model="listParm.phone" placeholder="请输入电话" />
+        <el-input v-model="listParam.phone" placeholder="请输入电话" />
       </el-form-item>
       <el-form-item>
         <el-button icon="el-icon-search" @click="searchBtn">搜索</el-button>
@@ -65,11 +65,11 @@
     </el-table>
     <!-- 分页 -->
     <el-pagination
-      :current-page.sync="listParm.currentPage"
+      :current-page.sync="listParam.currentPage"
       :page-sizes="[10, 20, 40, 80, 100]"
-      :page-size="listParm.pageSize"
+      :page-size="listParam.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="listParm.total"
+      :total="listParam.total"
       background
       @size-change="sizeChange"
       @current-change="currentChange"
@@ -232,7 +232,7 @@ export default {
       // 表格的高度
       tableHeight: 0,
       // 列表查询的参数
-      listParm: {
+      listParam: {
         nickName: '',
         phone: '',
         currentPage: 1,
@@ -275,8 +275,8 @@ export default {
     },
     // 重置按钮
     resetBtn() {
-      this.listParm.nickName = ''
-      this.listParm.phone = ''
+      this.listParam.nickName = ''
+      this.listParam.phone = ''
       this.getList()
     },
     // 搜索按钮
@@ -285,7 +285,7 @@ export default {
     },
     // 获取列表
     async getList() {
-      const res = await getListApi(this.listParm)
+      const res = await getListApi(this.listParam)
       console.log('返回成功')
       console.log(res)
       if (res && res.code === 200) {
@@ -321,12 +321,12 @@ export default {
     },
     // 页数改变时触发
     currentChange(val) {
-      this.listParm.currentPage = val
+      this.listParam.currentPage = val
       this.getList()
     },
     // 页容量改变时触发
     sizeChange(val) {
-      this.listParm.pageSize = val
+      this.listParam.pageSize = val
       this.getList()
     },
     // 删除按钮

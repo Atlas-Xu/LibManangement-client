@@ -1,9 +1,9 @@
 <template>
   <el-main>
     <!-- 搜索栏 -->
-    <el-form :model="noticeParm" label-width="80px" :inline="true" size="mini">
+    <el-form :model="noticeParam" label-width="80px" :inline="true" size="mini">
       <el-form-item label="公告标题">
-        <el-input v-model="noticeParm.noticeTitle" />
+        <el-input v-model="noticeParam.noticeTitle" />
       </el-form-item>
       <el-form-item>
         <el-button icon="el-icon-search" @click="searchBtn">搜索</el-button>
@@ -52,11 +52,11 @@
     </el-table>
     <!-- 分页 -->
     <el-pagination
-      :current-page.sync="noticeParm.currentPage"
+      :current-page.sync="noticeParam.currentPage"
       :page-sizes="[10, 20, 40, 80, 100]"
-      :page-size="noticeParm.pageSize"
+      :page-size="noticeParam.pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="noticeParm.total"
+      :total="noticeParam.total"
       background
       @size-change="sizeChange"
       @current-change="currentChange"
@@ -129,7 +129,7 @@ export default {
       },
       tableHeight: 0,
       tableData: [],
-      noticeParm: {
+      noticeParam: {
         currentPage: 1,
         pageSize: 10,
         noticeTitle: '',
@@ -172,10 +172,10 @@ export default {
     async deleteBtn(row) {
       const confirm = await this.$myconfirm('确定删除该数据吗?')
       if (confirm) {
-        const parm = {
+        const param = {
           noticeId: row.noticeId
         }
-        const res = await deleteApi(parm)
+        const res = await deleteApi(param)
         if (res && res.code == 200) {
           this.$message.success(res.msg)
           this.getList()
@@ -195,7 +195,7 @@ export default {
     },
     // 重置按钮
     resetBtn() {
-      this.noticeParm.noticeTitle = ''
+      this.noticeParam.noticeTitle = ''
       this.getList()
     },
     // 搜索按钮
@@ -213,10 +213,10 @@ export default {
       this.dialog.visible = true
     },
     async getList() {
-      const res = await getListApi(this.noticeParm)
+      const res = await getListApi(this.noticeParam)
       if (res && res.code == 200) {
         this.tableData = res.data.records
-        this.noticeParm.total = res.data.total
+        this.noticeParam.total = res.data.total
       }
     }
   }
